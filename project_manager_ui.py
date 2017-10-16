@@ -32,14 +32,14 @@ class MainUi(QWidget):
         self.radio_characters.toggle()
 
         self.radio_props = QRadioButton('props')
-        self.radio_shot = QRadioButton('shot')
+        self.radio_shots = QRadioButton('shot')
         self.spacer_task = QSpacerItem(20, 40)
         self.label_task = QLabel('Task:')
         self.combo_tasks = QComboBox()
 
         layout_asset_types.addWidget(self.radio_characters, 0, 0, 1, 2)
         layout_asset_types.addWidget(self.radio_props, 0, 2, 1, 2)
-        layout_asset_types.addWidget(self.radio_shot, 0, 4, 1, 2)
+        layout_asset_types.addWidget(self.radio_shots, 0, 4, 1, 2)
         layout_asset_types.addItem(self.spacer_task, 1, 0)
         layout_asset_types.addWidget(self.label_task, 1, 3)
         layout_asset_types.addWidget(self.combo_tasks, 1, 4, 1, 2)
@@ -134,7 +134,16 @@ class MainUi(QWidget):
         self.button_create_asset.clicked.connect(self.create_asset_window)
         self.button_create_task.clicked.connect(self.create_menu_window)
 
+        self.radio_characters.clicked.connect(self.refresh_combo_box)
+        self.radio_props.clicked.connect(self.refresh_combo_box)
+        self.radio_shots.clicked.connect(self.refresh_combo_box)
+
+        refresh_combo_box(self)
+
         self.show()
+
+    def refresh_combo_box(self):
+        refresh_combo_box(self)
 
     def create_menu_window(self):
         self.menu_roots.move(QCursor.pos())
@@ -316,8 +325,36 @@ class CreateTaskUi(QWidget):
             print 'Please write asset\'s name'
 
 
+def checked_asset_type(self):
+    asset_types = [self.radio_characters , self.radio_props, self.radio_shots]
+    asset_type = ''
+
+    for type in asset_types:
+        if type.isChecked():
+            asset_type = type.text()
+
+    return asset_type
+
+
 def refresh_combo_box(self):
-    pass
+    asset_type = checked_asset_type(self)
+
+    asset_task_list = ['lighting', 'modeling', 'rig']
+    shot_task_list = ['animation', 'fx', 'render']
+
+    self.combo_tasks.clear()
+    # self.combo_tasks.addItem('Select Asset')
+
+    if asset_type == 'characters' or asset_type == 'props':
+        for asset in asset_task_list:
+            self.combo_tasks.addItem(asset)
+
+    elif asset_type == 'shot':
+        for asset in shot_task_list:
+            self.combo_tasks.addItem(asset)
+
+    else:
+        pass
 
 
 def center_window(self):

@@ -144,3 +144,7 @@ def create_tasks(project_name, asset_type, asset_name, task_name):
 
     else:
         print 'This task already exist.'
+
+
+def file_extension(file_root):
+   return os.path.splitext(file_root)[1]
