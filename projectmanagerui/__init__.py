@@ -3,7 +3,7 @@ from PySide.QtGui import *
 import projectmanager
 
 
-PROJECT_NAME = 'ProjectManager-Template'
+PROJECT_NAME = 'superProjet'
 
 
 class MainUi(QWidget):
@@ -17,7 +17,7 @@ class MainUi(QWidget):
         self.resize(500, 700)
         center_window(self)
         self.setWindowTitle('Project-Manager')
-        self.setWindowIcon(QIcon('D:/ProjectManager-Template/super_favicon.jpg'))
+        self.setWindowIcon(QIcon('C:\Users\Anthony\Dropbox\superProjet\super_favicon.jpg'))
 
         # Main Layout
         main_layout = QVBoxLayout()
@@ -53,7 +53,7 @@ class MainUi(QWidget):
         self.label_asset_thumbnail.setMinimumHeight(80)
         self.label_asset_thumbnail.setMaximumWidth(130)
         self.label_asset_thumbnail.setMaximumHeight(80)
-        self.thumbnail_asset = QPixmap('D:/ProjectManager-Template/assets/characters/jean/vignette.jpg')
+        self.thumbnail_asset = QPixmap('C:/Users/Anthony/Dropbox/superProjet/assets/characters/jean/vignette.jpg')
         self.label_asset_thumbnail.setPixmap(self.thumbnail_asset)
 
         self.label_asset_description = QLabel('dzeyg ygfyzgfze zugfizuf fyzuh zodhvbezd fzeg zy  uezgduyedf z '
@@ -145,7 +145,8 @@ class MainUi(QWidget):
         self.show()
 
     def refresh_combo_box(self):
-        asset_type = checked_asset_type(self)
+        radio_list = [self.radio_characters, self.radio_props, self.radio_shots]
+        asset_type = checked_asset_type(radio_list)
 
         asset_task_list = ['lighting', 'modeling', 'rig']
         shot_task_list = ['animation', 'fx', 'render']
@@ -336,11 +337,10 @@ class CreateTaskUi(QWidget):
             print 'Please write asset\'s name'
 
 
-def checked_asset_type(self):
-    asset_types = [self.radio_characters , self.radio_props, self.radio_shots]
+def checked_asset_type(radio_list):
     asset_type = ''
 
-    for type in asset_types:
+    for type in radio_list:
         if type.isChecked():
             asset_type = type.text()
 
@@ -348,7 +348,7 @@ def checked_asset_type(self):
 
 
 def update_combo_box(combo_box, items):
-    #combobox.signalsBlocked(True)
+    # combobox.signalsBlocked(True)
     combo_box.clear()
     for item in items:
         combo_box.addItem(item)

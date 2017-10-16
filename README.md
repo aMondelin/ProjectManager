@@ -14,6 +14,8 @@
 
 - Installer le Project Manager avec la commande `pip install git+http://github.com/AMondelin/ProjectManager.git`
 
+- Installer Pyside avec la commande `pip install -U Pyside`
+
 ### 3ds Max
 
 - Lancer Max

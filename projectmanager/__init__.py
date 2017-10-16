@@ -1,6 +1,6 @@
 import os
 
-PROJECT_ROOT = "D:"
+PROJECT_ROOT = "C:"
 ASSET_FOLDER = "assets"
 SHOT_FOLDER = "shots"
 WIP_FOLDER = "wip"

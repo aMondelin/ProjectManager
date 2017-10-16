@@ -1,6 +1,6 @@
 import projectmanager
 
-PROJECT_NAME = "ProjectManager-Template"
+PROJECT_NAME = "superProjet"
 
 #
 # User Story #1 : ETQ graphiste, je souhaite trouver la derniere version de mon travail
