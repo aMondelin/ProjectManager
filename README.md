@@ -4,7 +4,9 @@
 
 ### Python
 
-- Installer Python 2.7.x [lien ici](https://www.python.org/downloads/)
+- Installer Python 2.7.x [Lien ici](https://www.python.org/downloads/)
+
+- Installer Git [Lien ici](https://git-scm.com/download/win)
 
 - Ouvrir une invite de commande (`Windows` + `R`, puis taper `cmd.exe`)
 
