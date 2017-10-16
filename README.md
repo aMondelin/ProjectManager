@@ -18,7 +18,8 @@
 
 - Ouvrir la fenêtre **Configure System Paths** (menu `Customize` > `Configure System Paths`)
 
-- Dans l'onglet **3rd Party Plug-Ins**, ajouter un dossier avec le bouton `Add...` : `C:\Python27\Lib\site-packages\projectmanager\3dsmax`
+- Dans l'onglet **3rd Party Plug-Ins**, ajouter un dossier avec le bouton `Add...` : 
+`C:\Python27\Lib\site-packages\projectmanager\3dsmax`
 
 - Valider
 
