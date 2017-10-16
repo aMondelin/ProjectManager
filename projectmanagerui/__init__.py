@@ -1,6 +1,6 @@
 import sys
-import projectmanager
 from PySide.QtGui import *
+import projectmanager
 
 
 PROJECT_NAME = 'ProjectManager-Template'
@@ -56,7 +56,9 @@ class MainUi(QWidget):
         self.thumbnail_asset = QPixmap('D:/ProjectManager-Template/assets/characters/jean/vignette.jpg')
         self.label_asset_thumbnail.setPixmap(self.thumbnail_asset)
 
-        self.label_asset_description = QLabel('dzeyg ygfyzgfze zugfizuf fyzuh zodhvbezd fzeg zy  uezgduyedf z fhzebfiezf zefzbefiuzebf zeiugze zeuriuzbe bze iuu z ziuhuzhcu nz z hchoz ofzdfzp dzfoijfoierg ijhozuhfoizeiopfzefefe')
+        self.label_asset_description = QLabel('dzeyg ygfyzgfze zugfizuf fyzuh zodhvbezd fzeg zy  uezgduyedf z '
+                                              'fhzebfiezf zefzbefiuzebf zeiugze zeuriuzbe bze iuu z ziuhuzhcu nz z '
+                                              'hchoz ofzdfzp dzfoijfoierg ijhozuhfoizeiopfzefefe')
         self.label_asset_description.setWordWrap(1)
         self.label_asset_description.setContentsMargins(15, 0, 0, 0)
 
