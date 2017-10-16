@@ -140,12 +140,21 @@ class MainUi(QWidget):
         self.radio_props.clicked.connect(self.refresh_combo_box)
         self.radio_shots.clicked.connect(self.refresh_combo_box)
 
-        refresh_combo_box(self)
+        self.refresh_combo_box()
 
         self.show()
 
     def refresh_combo_box(self):
-        refresh_combo_box(self)
+        asset_type = checked_asset_type(self)
+
+        asset_task_list = ['lighting', 'modeling', 'rig']
+        shot_task_list = ['animation', 'fx', 'render']
+
+        if asset_type == 'characters' or asset_type == 'props':
+            update_combo_box(self.combo_tasks, asset_task_list)
+
+        elif asset_type == 'shot':
+            update_combo_box(self.combo_tasks, shot_task_list)
 
     def create_menu_window(self):
         self.menu_roots.move(QCursor.pos())
@@ -338,25 +347,12 @@ def checked_asset_type(self):
     return asset_type
 
 
-def refresh_combo_box(self):
-    asset_type = checked_asset_type(self)
-
-    asset_task_list = ['lighting', 'modeling', 'rig']
-    shot_task_list = ['animation', 'fx', 'render']
-
-    self.combo_tasks.clear()
-    # self.combo_tasks.addItem('Select Asset')
-
-    if asset_type == 'characters' or asset_type == 'props':
-        for asset in asset_task_list:
-            self.combo_tasks.addItem(asset)
-
-    elif asset_type == 'shot':
-        for asset in shot_task_list:
-            self.combo_tasks.addItem(asset)
-
-    else:
-        pass
+def update_combo_box(combo_box, items):
+    #combobox.signalsBlocked(True)
+    combo_box.clear()
+    for item in items:
+        combo_box.addItem(item)
+    # combobox.signalsBlocked(False)
 
 
 def center_window(self):
