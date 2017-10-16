@@ -1,97 +1,32 @@
 # ProjectManager
 
-## Tool to manage folders in 3D film.
+## Installation
 
-### Version : 0.00
+### Python
 
+- Installer Python 2.7.x [lien ici](https://www.python.org/downloads/)
 
-```
-+ root
-    + references
-    + shared_maps
-    |   - dirt.png
-    + asset
-    |   + props
-    |   |   + boat
-    |   |   |   + maps
-    |   |   |   |   - boat_diffuse.png
-    |   |   |   |   - boat_spec.png
-    |   |   |   + concept
-    |   |   |   + modeling
-    |   |   |   + rig
-    |   |   + barrel
-    |   |   |   + concept
-    |   |   |   + modeling
-    |   |   |   + rig
-    |   + characters
-    |   |   + jean
-    |   |   |   + concept
-    |   |   |   + modeling
-    |   |   |   + rig
-    |   |   + pierre
-    |   |   |   + concept
-    |   |   |   |   + wip
-    |   |   |   |   |   - pierre_sheet_001.psd
-    |   |   |   |   |   - pierre_sheet_002.psd
-    |   |   |   |   |   - pierre_sheet_003.psd
-    |   |   |   |   + output
-    |   |   |   |   |   - pierre_sheet.png
-    |   |   |   + modeling
-    |   |   |   |   + wip
-    |   |   |   |   |   - pierre_modeling_001.max
-    |   |   |   |   |   - pierre_modeling_002.max
-    |   |   |   |   |   - pierre_modeling_003.max
-    |   |   |   |   + output
-    |   |   |   |   |   - pierre_modeling.max
-    |   |   |   + rig
-    |   |   |   |   - pierre_rig.max
-    |   + environments
-    |   |   + cabin
-    |   |   |   + maps
-    |   |   |   |   - cabin_diffuse.png
-    |   |   |   |   - cabin_spec.png
-    |   |   |   + concept
-    |   |   |   |   - cabin_sheet.png
-    |   |   |   |   - cabin_atmosphere.png
-    |   |   |   + modeling
-    |   |   |   |   - cabin_modeling.max
+- Ouvrir une invite de commande (`Windows` + `R`, puis taper `cmd.exe`)
 
-    + scene
-    |   + p001
-    |   |   + storyboard
-    |   |   + animatic2d
-    |   |   + animation
-    |   |   + fx
-    |   |   + render
-    |   |   + compositing
-    |   + p002
-    |   |   + storyboard
-    |   |   + animatic2d
-    |   |   + animation
-    |   |   + fx
-    |   |   + render
-    |   |   + compositing
-```
+- Se rendre dans le dossier d'installation de Python en tapant la commande `cd C:\Python27\Scripts`
 
+- Installer le Project Manager avec la commande `pip install git+http://github.com/AMondelin/ProjectManager.git`
 
-asset : boat, barrel, jean, ...
-(asset_type : prop, character, ...)
+### 3ds Max
 
-shot : p001, p002, ...
+- Lancer Max
 
-task : modeling, compositing, ...
+- Ouvrir la fenêtre **Configure System Paths** (menu `Customize` > `Configure System Paths`)
 
-wip : cabin_diffuse_001.png, cabin_diffuse_002.png, ...
+- Dans l'onglet **3rd Party Plug-Ins**, ajouter un dossier avec le bouton `Add...` : 
+`C:\Python27\Lib\site-packages\projectmanager\3dsmax`
 
-output : cabin_diffuse.png
+- Valider
 
+- Créer **un raccourci** sur le bureau du fichier `C:\Python27\Lib\site-packages\projectmanager\3dsmax\launcher.cmd`
 
--- User Story
+- Dorénavant, utiliser **ce raccourci** pour lancer Max
 
-"En tant que graphiste, je souhaite pouvoir ouvrir la derniere version de mon travail"
+## Mise à jour
 
--> lister les assets / shots
-
--> lister les taches de l'asset / shot
-
--> trouver la derniere version de la tache
+Les mises à jour sont automatiques, à condition d'**utiliser le raccourci** précédement créé
