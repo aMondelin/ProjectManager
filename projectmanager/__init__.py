@@ -4,11 +4,13 @@ PROJECT_ROOT = "C:"
 ASSET_FOLDER = "assets"
 SHOT_FOLDER = "shots"
 WIP_FOLDER = "wip"
+IMAGES_FOLDER = "img"
 DEFAULT_TASKS = ["concept", "maps", "modeling", "rig"]
 
 
 def _make_project_root(project_name):
-    return os.path.join(PROJECT_ROOT, project_name)
+    project_root = os.path.expandvars('$USERPROFILE')
+    return os.path.join(project_root, project_name)
 
 
 def _list_folders(root):
@@ -34,6 +36,11 @@ def _list_files(root):
             files.append(item)
 
     return files
+
+
+def make_images_root(project_name):
+    image_root = _make_project_root(project_name)
+    return os.path.join(image_root, IMAGES_FOLDER)
 
 
 def make_asset_root(project_name, asset_type, asset_name):

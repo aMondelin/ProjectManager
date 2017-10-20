@@ -4,6 +4,7 @@ import projectmanager
 
 
 PROJECT_NAME = 'superProjet'
+ICON_MANAGER = '_icon_manager.jpg'
 
 
 class MainUi(QWidget):
@@ -17,7 +18,9 @@ class MainUi(QWidget):
         self.resize(500, 700)
         center_window(self)
         self.setWindowTitle('Project-Manager')
-        self.setWindowIcon(QIcon('C:\Users\Anthony\Dropbox\superProjet\super_favicon.jpg'))
+        images_folder = projectmanager.make_images_root(PROJECT_NAME)
+        # icon_manager = os.path.join(images_folder, ICON_MANAGER)
+        # self.setWindowIcon(QIcon(icon_manager))
 
         # Main Layout
         main_layout = QVBoxLayout()
@@ -53,8 +56,8 @@ class MainUi(QWidget):
         self.label_asset_thumbnail.setMinimumHeight(80)
         self.label_asset_thumbnail.setMaximumWidth(130)
         self.label_asset_thumbnail.setMaximumHeight(80)
-        self.thumbnail_asset = QPixmap('C:/Users/Anthony/Dropbox/superProjet/assets/characters/jean/vignette.jpg')
-        self.label_asset_thumbnail.setPixmap(self.thumbnail_asset)
+        # self.thumbnail_asset = QPixmap('D:/ProjectManager-Template/assets/characters/jean/vignette.jpg')
+        # self.label_asset_thumbnail.setPixmap(self.thumbnail_asset)
 
         self.label_asset_description = QLabel('dzeyg ygfyzgfze zugfizuf fyzuh zodhvbezd fzeg zy  uezgduyedf z '
                                               'fhzebfiezf zefzbefiuzebf zeiugze zeuriuzbe bze iuu z ziuhuzhcu nz z '
@@ -136,17 +139,16 @@ class MainUi(QWidget):
         self.button_create_asset.clicked.connect(self.create_asset_window)
         self.button_create_task.clicked.connect(self.create_menu_window)
 
-        self.radio_characters.clicked.connect(self.refresh_combo_box)
-        self.radio_props.clicked.connect(self.refresh_combo_box)
-        self.radio_shots.clicked.connect(self.refresh_combo_box)
+        # self.radio_characters.clicked.connect(self.refresh_combo_box)
+        # self.radio_props.clicked.connect(self.refresh_combo_box)
+        # self.radio_shots.clicked.connect(self.refresh_combo_box)
 
         self.refresh_combo_box()
 
         self.show()
 
     def refresh_combo_box(self):
-        radio_list = [self.radio_characters, self.radio_props, self.radio_shots]
-        asset_type = checked_asset_type(radio_list)
+        asset_type = checked_asset_type([self.radio_characters , self.radio_props, self.radio_shots])
 
         asset_task_list = ['lighting', 'modeling', 'rig']
         shot_task_list = ['animation', 'fx', 'render']
@@ -158,7 +160,7 @@ class MainUi(QWidget):
             update_combo_box(self.combo_tasks, shot_task_list)
 
     def create_menu_window(self):
-        self.menu_roots.move(QCursor.pos())
+        self.menu_roots.move(QCursor.pos)
         self.menu_roots.exec_()
 
     def create_asset_window(self):
@@ -204,11 +206,7 @@ class CreateAssetUi(QWidget):
 
     def create_asset_triggered(self):
         asset_types = [self.radio_character, self.radio_props]
-        asset_type = ''
-
-        for type in asset_types:
-            if type.isChecked():
-                asset_type = type.text()
+        asset_type = checked_asset_type(asset_types)
 
         asset_name = self.line_edit_asset_name.text()
 
@@ -310,7 +308,7 @@ class CreateTaskUi(QWidget):
         return asset_type
 
     def refresh_combo_asset(self):
-        asset_type = self.checked_asset_type()
+        asset_type = self.checked_asset_type([self.radio_characters , self.radio_props, self.radio_shots])
 
         asset_list = projectmanager.all_assets(project_name = PROJECT_NAME, asset_type = asset_type)
 
@@ -324,7 +322,7 @@ class CreateTaskUi(QWidget):
         self.refresh_combo_asset()
 
     def create_task_triggered(self):
-        asset_type = self.checked_asset_type()
+        asset_type = checked_asset_type([self.radio_characters , self.radio_props, self.radio_shots])
         asset_name = self.combo_asset_names.currentText()
         task_name = self.line_edit_task_name.text()
 
@@ -348,18 +346,18 @@ def checked_asset_type(radio_list):
 
 
 def update_combo_box(combo_box, items):
-    # combobox.signalsBlocked(True)
+    #combobox.signalsBlocked(True)
     combo_box.clear()
     for item in items:
         combo_box.addItem(item)
     # combobox.signalsBlocked(False)
 
 
-def center_window(self):
-    size_window = self.frameGeometry()
+def center_window(window):
+    size_window = window.frameGeometry()
     user_window_center = QDesktopWidget().availableGeometry().center()
     size_window.moveCenter(user_window_center)
-    self.move(size_window.topLeft())
+    window.move(size_window.topLeft())
 
 
 def generate_ui():
