@@ -72,7 +72,7 @@ class MainUi(QWidget):
         group_asset_picker = QGroupBox('Assets')
         layout_asset_picker = QVBoxLayout(group_asset_picker)
 
-        self.list_view_assets = QListView()
+        self.list_view_assets = QListWidget()
 
         layout_asset_picker.addWidget(self.list_view_assets)
 
@@ -144,6 +144,8 @@ class MainUi(QWidget):
         # self.radio_shots.clicked.connect(self.refresh_combo_box)
 
         self.refresh_combo_box()
+        asset_type = checked_asset_type([self.radio_characters, self.radio_props, self.radio_shots])
+        update_asset_list(self.list_view_assets, asset_type)
 
         self.show()
 
@@ -160,7 +162,7 @@ class MainUi(QWidget):
             update_combo_box(self.combo_tasks, shot_task_list)
 
     def create_menu_window(self):
-        self.menu_roots.move(QCursor.pos)
+        self.menu_roots.move(QCursor.pos())
         self.menu_roots.exec_()
 
     def create_asset_window(self):
@@ -297,18 +299,9 @@ class CreateTaskUi(QWidget):
 
         self.show()
 
-    def checked_asset_type(self):
-        asset_types = [self.radio_character, self.radio_props]
-        asset_type = ''
-
-        for type in asset_types:
-            if type.isChecked():
-                asset_type = type.text()
-
-        return asset_type
-
     def refresh_combo_asset(self):
-        asset_type = self.checked_asset_type([self.radio_characters , self.radio_props, self.radio_shots])
+        asset_types = [self.radio_character, self.radio_props]
+        asset_type = checked_asset_type(asset_types)
 
         asset_list = projectmanager.all_assets(project_name = PROJECT_NAME, asset_type = asset_type)
 
@@ -351,6 +344,15 @@ def update_combo_box(combo_box, items):
     for item in items:
         combo_box.addItem(item)
     # combobox.signalsBlocked(False)
+
+
+def update_asset_list(list_view, asset_type):
+    all_assets = projectmanager.all_assets(PROJECT_NAME, asset_type)
+    print all_assets
+    for asset in all_assets:
+        item = QListWidgetItem()
+        item.setText(asset)
+        list_view.addItem(item)
 
 
 def center_window(window):
