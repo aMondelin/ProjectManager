@@ -4,7 +4,6 @@ import projectmanager
 
 
 PROJECT_NAME = 'superProjet'
-ICON_MANAGER = '_icon_manager.jpg'
 
 
 class MainUi(QWidget):
@@ -18,9 +17,8 @@ class MainUi(QWidget):
         self.resize(500, 700)
         center_window(self)
         self.setWindowTitle('Project-Manager')
-        images_folder = projectmanager.make_images_root(PROJECT_NAME)
-        # icon_manager = os.path.join(images_folder, ICON_MANAGER)
-        # self.setWindowIcon(QIcon(icon_manager))
+        icon_manager = projectmanager._icon_root(PROJECT_NAME)
+        self.setWindowIcon(QIcon(icon_manager))
 
         # Main Layout
         main_layout = QVBoxLayout()
@@ -80,7 +78,7 @@ class MainUi(QWidget):
         group_asset_version = QGroupBox('Versions')
         layout_asset_version = QVBoxLayout(group_asset_version)
 
-        self.list_view_versions = QListView()
+        self.list_view_versions = QListWidget()
 
         layout_asset_version.addWidget(self.list_view_versions)
 
@@ -139,6 +137,11 @@ class MainUi(QWidget):
         self.button_create_asset.clicked.connect(self.create_asset_window)
         self.button_create_task.clicked.connect(self.create_menu_window)
 
+        self.radio_characters.clicked.connect(self.update_assets_list)
+        self.radio_props.clicked.connect(self.update_assets_list)
+
+        self.list_view_assets.itemClicked.connect(self.asset_clicked)
+
         # self.radio_characters.clicked.connect(self.refresh_combo_box)
         # self.radio_props.clicked.connect(self.refresh_combo_box)
         # self.radio_shots.clicked.connect(self.refresh_combo_box)
@@ -149,8 +152,18 @@ class MainUi(QWidget):
 
         self.show()
 
+    def checked_asset_type(self):
+        return checked_asset_type([self.radio_characters, self.radio_props, self.radio_shots])
+
+    def asset_clicked(self):
+        asset_type = self.checked_asset_type()
+        asset_name = self.list_view_assets.currentItem().text()
+        asset_task = self.combo_tasks.currentText()
+
+        update_versions_list(self.list_view_versions, asset_type, asset_name, asset_task)
+
     def refresh_combo_box(self):
-        asset_type = checked_asset_type([self.radio_characters , self.radio_props, self.radio_shots])
+        asset_type = self.checked_asset_type()
 
         asset_task_list = ['lighting', 'modeling', 'rig']
         shot_task_list = ['animation', 'fx', 'render']
@@ -160,6 +173,16 @@ class MainUi(QWidget):
 
         elif asset_type == 'shot':
             update_combo_box(self.combo_tasks, shot_task_list)
+
+    def update_assets_list(self):
+        self.list_view_versions.clear()
+        asset_type = self.checked_asset_type()
+        update_asset_list(self.list_view_assets, asset_type)
+
+    def update_versions_list(self):
+        asset_type = self.checked_asset_type()
+        asset_task = self.combo_tasks.currentText()
+        update_versions_list(self.list_view_versions, asset_type, asset_task)
 
     def create_menu_window(self):
         self.menu_roots.move(QCursor.pos())
@@ -348,10 +371,27 @@ def update_combo_box(combo_box, items):
 
 def update_asset_list(list_view, asset_type):
     all_assets = projectmanager.all_assets(PROJECT_NAME, asset_type)
-    print all_assets
+
+    list_view.clear()
     for asset in all_assets:
         item = QListWidgetItem()
         item.setText(asset)
+        list_view.addItem(item)
+
+
+def update_versions_list(list_view, asset_type, asset_name, asset_task):
+    all_versions = projectmanager.asset_versions(PROJECT_NAME, asset_type, asset_name, asset_task)
+
+    list_view.clear()
+    versions_count = len(all_versions)
+    if versions_count != 0:
+        for version in all_versions:
+            item = QListWidgetItem()
+            item.setText(version)
+            list_view.addItem(item)
+    else:
+        item = QListWidgetItem()
+        item.setText('None')
         list_view.addItem(item)
 
 

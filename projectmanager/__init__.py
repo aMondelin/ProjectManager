@@ -1,16 +1,23 @@
 import os
 
 PROJECT_ROOT = "C:"
+DROPBOX_FOLDER = "Dropbox"
 ASSET_FOLDER = "assets"
 SHOT_FOLDER = "shots"
 WIP_FOLDER = "wip"
 IMAGES_FOLDER = "img"
 DEFAULT_TASKS = ["concept", "maps", "modeling", "rig"]
+ICON_NAME = '_icon_manager.jpg'
 
 
 def _make_project_root(project_name):
     project_root = os.path.expandvars('$USERPROFILE')
-    return os.path.join(project_root, project_name)
+    return os.path.join(project_root, DROPBOX_FOLDER, project_name)
+
+
+def _icon_root(project_name):
+    icon_folder = make_images_root(project_name)
+    return os.path.join(icon_folder, ICON_NAME)
 
 
 def _list_folders(root):
@@ -48,9 +55,9 @@ def make_asset_root(project_name, asset_type, asset_name):
     return os.path.join(project_root, ASSET_FOLDER, asset_type, asset_name)
 
 
-def make_task_root(project_name, asset_type, asset_name, task_name):
+def make_task_root(project_name, asset_type, asset_name, asset_task):
     asset_root = make_asset_root(project_name, asset_type, asset_name)
-    return os.path.join(asset_root, task_name)
+    return os.path.join(asset_root, asset_task)
 
 
 def all_asset_types(project_name):
@@ -77,13 +84,17 @@ def all_tasks(project_name, asset_type, asset_name):
     return _list_folders(asset_folder)
 
 
-def last_version(project_name, asset_type, asset_name, task_name):
-    task_root = make_task_root(project_name, asset_type, asset_name, task_name)
+def asset_versions(project_name, asset_type, asset_name, asset_task):
+    task_root = make_task_root(project_name, asset_type, asset_name, asset_task)
     versions_path = os.path.join(
         task_root,
         WIP_FOLDER
     )
-    versions = _list_files(versions_path)
+    return _list_files(versions_path)
+
+
+def last_version(project_name, asset_type, asset_name, task_name):
+    versions = asset_versions(project_name, asset_type, asset_name, task_name)
     return sorted(versions)[-1]
 
 
